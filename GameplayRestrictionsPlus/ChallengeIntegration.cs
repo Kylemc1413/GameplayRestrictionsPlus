@@ -21,7 +21,7 @@ namespace GameplayRestrictionsPlus
         {
             ChallengeExternalModifiers.onChallengeFailedToLoad += ReturnOptions;
             ChallengeExternalModifiers.onChallengeEnd += ReturnOptions;
-            ChallengeExternalModifiers.RegisterHandler("GameplayREstrictionsPlus", delegate (string[] modifiers)
+            ChallengeExternalModifiers.RegisterHandler("GameplayRestrictionsPlus", delegate (string[] modifiers)
            {
                Plugin.activateDuringIsolated = true;
                SaveOptions();
