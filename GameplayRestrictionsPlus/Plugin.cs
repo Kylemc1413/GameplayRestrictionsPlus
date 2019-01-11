@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using IllusionInjector;
+using IllusionPlugin;
+using System;
 using System.IO;
 using System.Linq;
-using System.Media;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using IllusionPlugin;
-using IllusionInjector;
 namespace GameplayRestrictionsPlus
 {
     public class Plugin : IPlugin
@@ -71,16 +68,16 @@ namespace GameplayRestrictionsPlus
             {
                 
                 ScoreBuffer buffer = new ScoreBuffer(cutInfo, cutInfo.afterCutSwingRatingCounter);
-                buffer.didFinishEvent += bufferDidFinishEvent;
+                buffer.didFinishEvent += BufferDidFinishEvent;
 
             }
 
 
 
         }
-        private void bufferDidFinishEvent(ScoreBuffer buffer)
+        private void BufferDidFinishEvent(ScoreBuffer buffer)
         {
-            if (buffer.returnScore() < Config.imperfectCutThreshold)
+            if (buffer.ReturnScore() < Config.imperfectCutThreshold)
                 Fail();
         }
         private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)

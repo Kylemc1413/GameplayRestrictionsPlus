@@ -62,10 +62,7 @@ namespace GameplayRestrictionsPlus
 
             Load();
 
-            if (ConfigChangedEvent != null)
-            {
-                ConfigChangedEvent(this);
-            }
+            ConfigChangedEvent?.Invoke(this);
         }
 
         public void Save()

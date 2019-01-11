@@ -25,12 +25,9 @@ namespace GameplayRestrictionsPlus
             didFinishEvent(this);
         }
 
-        public int returnScore()
+        public int ReturnScore()
         {
-            int before = 0;
-            int after = 0;
-            int acc = 0;
-            ScoreController.ScoreWithoutMultiplier(_noteCutInfo, _afterCutSwingRatingCounter, out before, out after, out acc);
+            ScoreController.ScoreWithoutMultiplier(_noteCutInfo, _afterCutSwingRatingCounter, out int before, out int after, out int acc);
             return before + after;
 
         }

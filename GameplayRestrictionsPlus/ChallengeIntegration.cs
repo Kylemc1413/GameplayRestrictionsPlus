@@ -74,7 +74,7 @@ namespace GameplayRestrictionsPlus
             Plugin.Config.failOnBomb = false;
             Plugin.Config.failOnImperfectCut = false;
             Plugin.Config.failOnSaberClash = false;
-            Plugin.Config.imperfectCutThreshold = 100f;
+            Plugin.Config.imperfectCutThreshold = 100;
         }
         private static void ReturnOptions()
         {
