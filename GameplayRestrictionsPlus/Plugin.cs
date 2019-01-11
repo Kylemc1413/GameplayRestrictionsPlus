@@ -39,7 +39,7 @@ namespace GameplayRestrictionsPlus
 
             if (newScene.name == "GameCore")
             {
-                if(!BS_Utils.Gameplay.Gamemode.IsIsolatedLevel && !activateDuringIsolated)
+                if(BS_Utils.Gameplay.Gamemode.IsIsolatedLevel && !activateDuringIsolated)
                 GetObjects();
             }
         }
