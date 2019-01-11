@@ -21,7 +21,7 @@ namespace GameplayRestrictionsPlus
         {
             ChallengeExternalModifiers.onChallengeFailedToLoad += ReturnOptions;
             ChallengeExternalModifiers.onChallengeEnd += ReturnOptions;
-            ChallengeExternalModifiers.RegisterHandler("GameplayModifiersPlus", delegate (string[] modifiers)
+            ChallengeExternalModifiers.RegisterHandler("GameplayREstrictionsPlus", delegate (string[] modifiers)
            {
                Plugin.activateDuringIsolated = true;
                SaveOptions();
@@ -30,7 +30,7 @@ namespace GameplayRestrictionsPlus
                {
                    if (arg.StartsWith("imperfectCutThreshold"))
                    {
-                       Plugin.Config.imperfectCutThreshold = int.Parse(arg.Split(':')[1]);
+                       Plugin.Config.imperfectCutThreshold = int.TryParse(arg.Split(':')[1], out int value) ? value : Plugin.Config.imperfectCutThreshold;
                        continue;
                    }
                    switch (arg)
