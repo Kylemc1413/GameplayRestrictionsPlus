@@ -102,11 +102,12 @@ namespace GameplayRestrictionsPlus
 
         public static bool CheckRestrictions()
         {
-            if (LevelData.gameplayCoreSetupData.gameplayModifiers.noFail) return false;
-            if (Config.failOnBadCut || Config.failOnMiss || Config.failOnBomb || Config.failOnSaberClash ||  Config.failOnImperfectCut || Config.restartOnFail || Config.crashOnFail)
+            if (LevelData.gameplayCoreSetupData.gameplayModifiers.noFail && !Config.stricterAngles) return false;
+            if (Config.failOnBadCut || Config.failOnMiss || Config.failOnBomb || Config.failOnSaberClash ||  Config.failOnImperfectCut || Config.restartOnFail || Config.crashOnFail || Config.stricterAngles)
                 return true;
             else
                 return false;
+
         }
 
 
@@ -166,6 +167,13 @@ namespace GameplayRestrictionsPlus
             _energyCounter.gameEnergyDidReach0Event += _energyCounter_gameEnergyDidReach0Event;
             if (Config.failOnSaberClash)
                 LevelData.gameplayCoreSetupData.gameplayModifiers.failOnSaberClash = true;
+            if(Config.stricterAngles)
+            {
+                Log("Disabling Score Submission for Stricter Angles");
+                BS_Utils.Gameplay.ScoreSubmission.DisableSubmission("Gameplay Restrictions Plus");
+                LevelData.gameplayCoreSetupData.gameplayModifiers.strictAngles = true;
+
+            }
         }
 
         private void _energyCounter_gameEnergyDidReach0Event()

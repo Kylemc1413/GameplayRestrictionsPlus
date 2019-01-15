@@ -18,7 +18,7 @@ namespace GameplayRestrictionsPlus
         public bool failOnBomb = false;
         public bool failOnSaberClash = false;
         public bool failOnImperfectCut = false;
-       
+        internal static bool stricterAngles = false;
         public int imperfectCutThreshold = 100;
 
         private readonly FileSystemWatcher _configWatcher;

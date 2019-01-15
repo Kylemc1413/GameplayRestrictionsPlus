@@ -42,24 +42,11 @@ namespace GameplayRestrictionsPlus
             var failOnImperfectOption = GameplaySettingsUI.CreateToggleOption(GameplaySettingsPanels.ModifiersLeft, "Fail On Imperfect Cut", "restrictions2", "Fail the Song on getting a cut below a threshold, can be changed manually in the config, default is 100.");
             failOnImperfectOption.GetValue = Plugin.Config.failOnImperfectCut;
             failOnImperfectOption.OnToggle += (value) => { Plugin.Config.failOnImperfectCut = value; Plugin.Config.Save(); };
-
-
-
-
-
-
-
-
-
-
+            
+            var stricterAnglesOption = GameplaySettingsUI.CreateToggleOption(GameplaySettingsPanels.ModifiersLeft, "Stricter Angles", "restrictions2", "Unfinished strict angles modifier from the game, might not even do anything. \r\n <b><#FF0000>Disables Score Submission</color></b>");
+            stricterAnglesOption.GetValue = Config.stricterAngles;
+            stricterAnglesOption.OnToggle += (value) => { Config.stricterAngles = value; Plugin.Config.Save(); };
+            
         }
-
-
-
-
-
-
-
-
     }
 }
