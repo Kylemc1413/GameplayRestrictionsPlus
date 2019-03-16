@@ -10,12 +10,12 @@ namespace GameplayRestrictionsPlus
     public class Plugin : IPlugin
     {
         public string Name => "GameplayRestrictionsPlus";
-        public string Version => "1.1.1";
+        public string Version => "1.2.0";
 
         public static readonly Config Config = new Config(Path.Combine(Environment.CurrentDirectory, "UserData\\GamePlayRestrictionsPlus.ini"));
 
         private BeatmapObjectSpawnController _spawnController;
-        public static StandardLevelSceneSetupDataSO LevelData { get; private set; }
+        public static BS_Utils.Gameplay.LevelData LevelData { get; private set; }
         private static StandardLevelFailedController _levelFailedController;
         private static StandardLevelRestartController _levelRestartController;
         private static GameEnergyCounter _energyCounter;
@@ -34,7 +34,7 @@ namespace GameplayRestrictionsPlus
         private void SceneManagerOnActiveSceneChanged(Scene oldScene, Scene newScene)
         {
             Config.Save();
-            if (newScene.name == "Menu")
+            if (newScene.name == "MenuCore")
                 activateDuringIsolated = false;
 
             if (newScene.name == "GameCore")
@@ -82,7 +82,7 @@ namespace GameplayRestrictionsPlus
         }
         private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
-            if (arg0.name == "Menu")
+            if (arg0.name == "MenuCore")
             {
                 UI.CreateUI();
                 Config.Save();
@@ -102,7 +102,7 @@ namespace GameplayRestrictionsPlus
 
         public static bool CheckRestrictions()
         {
-            if (LevelData.gameplayCoreSetupData.gameplayModifiers.noFail && !Config.stricterAngles) return false;
+            if (LevelData.GameplayCoreSceneSetupData.gameplayModifiers.noFail && !Config.stricterAngles) return false;
             if (Config.failOnBadCut || Config.failOnMiss || Config.failOnBomb || Config.failOnSaberClash ||  Config.failOnImperfectCut || Config.restartOnFail || Config.crashOnFail || Config.stricterAngles)
                 return true;
             else
@@ -144,7 +144,7 @@ namespace GameplayRestrictionsPlus
             _spawnController.noteWasCutEvent -= _spawnController_noteWasCutEvent;
             _spawnController.noteWasMissedEvent -= _spawnController_noteWasMissedEvent;
             if (LevelData == null)
-                LevelData = Resources.FindObjectsOfTypeAll<StandardLevelSceneSetupDataSO>().FirstOrDefault();
+                LevelData = BS_Utils.Plugin.LevelData;
             if (LevelData == null) return;
 
             if (_levelFailedController == null)
@@ -166,12 +166,12 @@ namespace GameplayRestrictionsPlus
             _spawnController.noteWasMissedEvent += _spawnController_noteWasMissedEvent;
             _energyCounter.gameEnergyDidReach0Event += _energyCounter_gameEnergyDidReach0Event;
             if (Config.failOnSaberClash)
-                LevelData.gameplayCoreSetupData.gameplayModifiers.failOnSaberClash = true;
+                LevelData.GameplayCoreSceneSetupData.gameplayModifiers.failOnSaberClash = true;
             if(Config.stricterAngles)
             {
                 Log("Disabling Score Submission for Stricter Angles");
                 BS_Utils.Gameplay.ScoreSubmission.DisableSubmission("Gameplay Restrictions Plus");
-                LevelData.gameplayCoreSetupData.gameplayModifiers.strictAngles = true;
+                LevelData.GameplayCoreSceneSetupData.gameplayModifiers.strictAngles = true;
 
             }
         }
