@@ -27,7 +27,7 @@ namespace GameplayRestrictionsPlus
 
         public int ReturnScore()
         {
-            ScoreController.ScoreWithoutMultiplier(_noteCutInfo, _afterCutSwingRatingCounter, out int before, out int after, out int acc);
+            ScoreController.RawScoreWithoutMultiplier(_noteCutInfo, _afterCutSwingRatingCounter, out int before, out int after, out int acc);
             return before + after;
 
         }

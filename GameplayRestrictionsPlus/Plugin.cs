@@ -10,7 +10,7 @@ namespace GameplayRestrictionsPlus
     public class Plugin : IPlugin
     {
         public string Name => "GameplayRestrictionsPlus";
-        public string Version => "1.2.0";
+        public string Version => "1.2.1";
 
         public static readonly Config Config = new Config(Path.Combine(Environment.CurrentDirectory, "UserData\\GamePlayRestrictionsPlus.ini"));
 
