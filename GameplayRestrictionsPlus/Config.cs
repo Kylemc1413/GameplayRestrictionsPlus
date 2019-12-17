@@ -6,77 +6,53 @@ using System.Threading.Tasks;
 using System.IO;
 namespace GameplayRestrictionsPlus
 {
-    public class Config
+    public static class Config
     {
-        public string FilePath { get; }
+        public static string FilePath { get; }
 
-        public bool restartOnFail = false;
-        public bool crashOnFail = false;
+        public static bool restartOnFail = false;
+        public static bool crashOnFail = false;
 
-        public bool failOnMiss = false;
-        public bool failOnBadCut = false;
-        public bool failOnBomb = false;
-        public bool failOnSaberClash = false;
-        public bool failOnImperfectCut = false;
+        public static bool failOnMiss = false;
+        public static bool failOnBadCut = false;
+        public static bool failOnBomb = false;
+        public static bool failOnSaberClash = false;
+        public static bool failOnImperfectCut = false;
+        public static bool failOnMissWithinFrame = false;
+        //Modes: Note Count, Note Percentage, Song Percentage
+        public static string frameMode = "NotePercent";
+        public static float frameValue = 15;
         internal static bool stricterAngles = false;
-        public int imperfectCutThreshold = 100;
-
-        private readonly FileSystemWatcher _configWatcher;
-        public event Action<Config> ConfigChangedEvent;
-        private bool _saving;
+        public static int imperfectCutThreshold = 100;
 
 
-        public Config(String filePath)
+
+
+        public static void Save()
         {
-            FilePath = filePath;
-
-            if (File.Exists(FilePath))
-            {
-                Load();
-            }
-            else
-            {
-                Save();
-            }
-
-            if (restartOnFail && crashOnFail)
-                crashOnFail = false;
-
-            _configWatcher = new FileSystemWatcher($"{Environment.CurrentDirectory}\\UserData")
-            {
-                NotifyFilter = NotifyFilters.LastWrite,
-                Filter = "GameplayModifiersPlusChatSettings.ini",
-                EnableRaisingEvents = true
-            };
-            _configWatcher.Changed += _configWatcher_Changed;
-
+            Plugin.ModConfig.SetBool("Fail Modifiers", "Restart on Fail", restartOnFail);
+            Plugin.ModConfig.SetBool("Restrictions", "Fail on Miss", failOnMiss);
+            Plugin.ModConfig.SetBool("Restrictions", "Fail on Bad Cut", failOnBadCut);
+            Plugin.ModConfig.SetBool("Restrictions", "Fail on Imperfect Cut", failOnImperfectCut);
+            Plugin.ModConfig.SetInt("Restrictions", "Imperfect Cut Threshold", imperfectCutThreshold);
+            Plugin.ModConfig.SetBool("Restrictions", "Fail on Miss Within Frame", failOnMissWithinFrame);
+            Plugin.ModConfig.SetString("Restrictions", "Miss Within Frame Mode (NoteCount, NotePercent, SongPercent)", frameMode);
+            Plugin.ModConfig.SetFloat("Restrictions", "Miss Within Frame Value (15% - 15, 15 Blocks - 15)", frameValue);
+            Plugin.ModConfig.SetBool("Restrictions", "Strict Angles (Disables Submission)", stricterAngles);
         }
 
-        private void _configWatcher_Changed(object sender, FileSystemEventArgs e)
+        public static void Load()
         {
-            if (_saving)
-            {
-                _saving = false;
-                return;
-            }
+            restartOnFail = Plugin.ModConfig.GetBool("Fail Modifiers", "Restart on Fail", false, true);
+            failOnMiss = Plugin.ModConfig.GetBool("Restrictions", "Fail on Miss", false, true);
+            failOnBadCut = Plugin.ModConfig.GetBool("Restrictions", "Fail on Bad Cut", false, true);
+            failOnImperfectCut = Plugin.ModConfig.GetBool("Restrictions", "Fail on Imperfect Cut", false, true);
+            imperfectCutThreshold = Plugin.ModConfig.GetInt("Restrictions", "Imperfect Cut Threshold", 100, true);
+            failOnMissWithinFrame = Plugin.ModConfig.GetBool("Restrictions", "Fail on Miss Within Frame", false, true);
+            frameMode = Plugin.ModConfig.GetString("Restrictions", "Miss Within Frame Mode (NoteCount, NotePercent, SongPercent)", "NotePercent", true);
+            frameValue = Plugin.ModConfig.GetFloat("Restrictions", "Miss Within Frame Value (15% - 15, 15 Blocks - 15)", 15, true);
+            stricterAngles = Plugin.ModConfig.GetBool("Restrictions", "Strict Angles (Disables Submission)", false, true);
 
-            Load();
-
-            ConfigChangedEvent?.Invoke(this);
-        }
-
-        public void Save()
-        {
-            _saving = true;
-            if (restartOnFail && crashOnFail)
-                crashOnFail = false;
-
-            ConfigSerializer.SaveConfig(this, FilePath);
-        }
-
-        public void Load()
-        {
-            ConfigSerializer.LoadConfig(this, FilePath);
         }
 
     }

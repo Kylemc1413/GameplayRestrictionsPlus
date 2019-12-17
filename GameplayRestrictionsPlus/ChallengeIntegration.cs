@@ -30,25 +30,25 @@ namespace GameplayRestrictionsPlus
                {
                    if (arg.StartsWith("imperfectCutThreshold"))
                    {
-                       Plugin.Config.imperfectCutThreshold = int.TryParse(arg.Split(':')[1], out int value) ? value : Plugin.Config.imperfectCutThreshold;
+                       Config.imperfectCutThreshold = int.TryParse(arg.Split(':')[1], out int value) ? value : Config.imperfectCutThreshold;
                        continue;
                    }
                    switch (arg)
                    {
                        case "failOnMiss":
-                           Plugin.Config.failOnMiss = true;
+                           Config.failOnMiss = true;
                            break;
                        case "failOnBadCut":
-                           Plugin.Config.failOnBadCut = true;
+                           Config.failOnBadCut = true;
                            break;
                        case "failOnBomb":
-                           Plugin.Config.failOnBomb = true;
+                           Config.failOnBomb = true;
                            break;
                        case "failOnImperfectCut":
-                           Plugin.Config.failOnImperfectCut = true;
+                           Config.failOnImperfectCut = true;
                            break;
                        case "failOnSaberClash":
-                           Plugin.Config.failOnSaberClash = true;
+                           Config.failOnSaberClash = true;
                            break;
                        default:
                            return false;
@@ -59,32 +59,32 @@ namespace GameplayRestrictionsPlus
         }
         private static void SaveOptions()
         {
-            failOnMiss = Plugin.Config.failOnMiss;
-            failOnBadCut = Plugin.Config.failOnBadCut;
-            failOnBomb = Plugin.Config.failOnBomb;
-            failOnImperfectCut = Plugin.Config.failOnImperfectCut;
-            failOnSaberClash = Plugin.Config.failOnSaberClash;
-            imperfectCutThreshold = Plugin.Config.imperfectCutThreshold;
+            failOnMiss = Config.failOnMiss;
+            failOnBadCut = Config.failOnBadCut;
+            failOnBomb = Config.failOnBomb;
+            failOnImperfectCut = Config.failOnImperfectCut;
+            failOnSaberClash = Config.failOnSaberClash;
+            imperfectCutThreshold = Config.imperfectCutThreshold;
       
         }
         private static void SetToDefaultOptions()
         {
-            Plugin.Config.failOnMiss = false;
-            Plugin.Config.failOnBadCut = false;
-            Plugin.Config.failOnBomb = false;
-            Plugin.Config.failOnImperfectCut = false;
-            Plugin.Config.failOnSaberClash = false;
-            Plugin.Config.imperfectCutThreshold = 100;
+            Config.failOnMiss = false;
+            Config.failOnBadCut = false;
+            Config.failOnBomb = false;
+            Config.failOnImperfectCut = false;
+            Config.failOnSaberClash = false;
+            Config.imperfectCutThreshold = 100;
         }
         private static void ReturnOptions()
         {
             Plugin.activateDuringIsolated = false;
-            Plugin.Config.failOnMiss = failOnMiss;
-            Plugin.Config.failOnBadCut = failOnBadCut;
-            Plugin.Config.failOnBomb = failOnBomb;
-            Plugin.Config.failOnImperfectCut = failOnImperfectCut;
-            Plugin.Config.failOnSaberClash = failOnSaberClash;
-            Plugin.Config.imperfectCutThreshold = imperfectCutThreshold;
+            Config.failOnMiss = failOnMiss;
+            Config.failOnBadCut = failOnBadCut;
+            Config.failOnBomb = failOnBomb;
+            Config.failOnImperfectCut = failOnImperfectCut;
+            Config.failOnSaberClash = failOnSaberClash;
+            Config.imperfectCutThreshold = imperfectCutThreshold;
         }
     }
 }

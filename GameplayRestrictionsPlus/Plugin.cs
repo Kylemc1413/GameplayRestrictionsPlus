@@ -10,9 +10,9 @@ namespace GameplayRestrictionsPlus
     public class Plugin : IPlugin
     {
         public string Name => "GameplayRestrictionsPlus";
-        public string Version => "1.2.2";
+        public string Version => "1.3.0";
 
-        public static readonly Config Config = new Config(Path.Combine(Environment.CurrentDirectory, "UserData\\GamePlayRestrictionsPlus.ini"));
+        public static readonly BS_Utils.Utilities.Config ModConfig = new BS_Utils.Utilities.Config("GameplayRestrictionsPlus");
 
         private BeatmapObjectSpawnController _spawnController;
         public static BS_Utils.Gameplay.LevelData LevelData { get; private set; }
@@ -33,7 +33,7 @@ namespace GameplayRestrictionsPlus
 
         private void SceneManagerOnActiveSceneChanged(Scene oldScene, Scene newScene)
         {
-            Config.Save();
+            Config.Load();
             if (newScene.name == "MenuCore")
                 activateDuringIsolated = false;
 
@@ -85,7 +85,6 @@ namespace GameplayRestrictionsPlus
             if (arg0.name == "MenuCore")
             {
                 UI.CreateUI();
-                Config.Save();
             }
 
 
@@ -103,7 +102,7 @@ namespace GameplayRestrictionsPlus
         public static bool CheckRestrictions()
         {
             if (LevelData.GameplayCoreSceneSetupData.gameplayModifiers.noFail && !Config.stricterAngles) return false;
-            if (Config.failOnBadCut || Config.failOnMiss || Config.failOnBomb || Config.failOnSaberClash ||  Config.failOnImperfectCut || Config.restartOnFail || Config.crashOnFail || Config.stricterAngles)
+            if (Config.failOnBadCut || Config.failOnMiss || Config.failOnBomb || Config.failOnSaberClash || Config.failOnImperfectCut || Config.restartOnFail || Config.crashOnFail || Config.stricterAngles || Config.failOnMissWithinFrame)
                 return true;
             else
                 return false;
